@@ -17,8 +17,8 @@ __version__ = "0.1.0"
 
 import argparse
 
-from .lib.send import send_kdeconnect_identity_request
-from .lib.net import Netns, netns_delete
+from .send import send_kdeconnect_identity_request
+from .net import Netns, netns_delete
 
 DEFAULT_NETNS_NAME = "ns0"
 DEFAULT_NETNS_NET = "11.0.0.0/24"
