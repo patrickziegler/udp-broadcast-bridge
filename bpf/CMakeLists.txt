@@ -5,7 +5,7 @@ set(CMAKE_C_COMPILER /usr/bin/clang)
 option(ENABLE_TEST OFF)
 
 set(BPF_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bpf/
-    CACHE STRING "Output dir for ebpf object files")
+    CACHE STRING "Output dir for eBPF object files")
 
 set(OPENWRT_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../../openwrt/staging_dir/target-mips_24kc_musl/usr/include/"
     CACHE STRING "Include dir of targeted OpenWRT build")
