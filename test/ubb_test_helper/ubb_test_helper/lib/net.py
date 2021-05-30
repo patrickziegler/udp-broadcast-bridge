@@ -76,7 +76,6 @@ class Netns:
     def __validate(self):
         if check_network_addr_used(self.net):
             raise ValueError("Network '%s' already in use" % self.net)
-
         if check_netns_exists(self.name):
             raise ValueError("Namespace '%s' already exists" % self.name)
 

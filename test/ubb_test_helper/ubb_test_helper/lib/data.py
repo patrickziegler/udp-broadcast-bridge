@@ -79,6 +79,6 @@ kdeconnect_identity_request = {
             "kdeconnect.battery",
             "kdeconnect.clipboard"
         ],
-        "tcpPort":1716
+        "tcpPort": 1716
     }
 }
