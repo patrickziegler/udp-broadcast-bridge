@@ -65,13 +65,13 @@ class Netdev:
 
 class Netns:
 
-    def __init__(self, name="netns0", net="11.0.0.0/24"):
+    def __init__(self, name="ns0", net="11.0.0.0/24"):
         self.net = ipaddress.ip_network(net, strict=False)
         self.name = name
         self.__validate()
         hosts = self.net.hosts()
-        self.eth1 = Netdev(name=self.name + "-eth1", addr=next(hosts))
-        self.eth2 = Netdev(name=self.name + "-eth2", addr=next(hosts))
+        self.eth0 = Netdev(name=self.name + "-veth0", addr=next(hosts))
+        self.eth1 = Netdev(name=self.name + "-veth1", addr=next(hosts))
 
     def __validate(self):
         if check_network_addr_used(self.net):
@@ -90,14 +90,14 @@ class Netns:
     def start(self):
         print("Creating network namespace %s" % self.name)
         exec_cmd("ip netns add %s" % self.name)
-        exec_cmd("ip link add %s type veth peer %s" % (self.eth1, self.eth2))
-        exec_cmd("ip link set %s netns %s" % (self.eth2, self.name))
-        exec_cmd("ip addr add %s/%d %s" % (self.eth1.addr, self.net.prefixlen,
-            self.eth1))
-        exec_cmd("ip addr add %s/%d %s" % (self.eth2.addr, self.net.prefixlen,
-            self.eth2), netns=self.name)
-        exec_cmd("ip link set %s up" % self.eth1)
-        exec_cmd("ip link set %s up" % self.eth2, netns=self.name)
+        exec_cmd("ip link add %s type veth peer %s" % (self.eth0, self.eth1))
+        exec_cmd("ip link set %s netns %s" % (self.eth1, self.name))
+        exec_cmd("ip addr add %s/%d dev %s" % (self.eth0.addr, self.net.prefixlen,
+            self.eth0))
+        exec_cmd("ip addr add %s/%d dev %s" % (self.eth1.addr, self.net.prefixlen,
+            self.eth1), netns=self.name)
+        exec_cmd("ip link set %s up" % self.eth0)
+        exec_cmd("ip link set %s up" % self.eth1, netns=self.name)
 
     def stop(self):
         netns_delete(self.name)

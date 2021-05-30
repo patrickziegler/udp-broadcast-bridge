@@ -17,11 +17,11 @@ __version__ = "0.1.0"
 
 import argparse
 
-from .lib.send import send_kdeconnect_identiy_request
+from .lib.send import send_kdeconnect_identity_request
 from .lib.net import Netns, netns_delete
 
 DEFAULT_NETNS_NAME = "ns0"
-DEFAULT_NETNS_NET = "11.0.0.0/8"
+DEFAULT_NETNS_NET = "11.0.0.0/24"
 
 
 def parse_args():
@@ -49,7 +49,7 @@ def main():
     args = parse_args()
 
     if args.cmd == "send":
-        send_kdeconnect_identiy_request(iface=args.iface)
+        send_kdeconnect_identity_request(iface=args.iface)
 
     elif args.cmd == "start":
         ns = Netns(name=args.name, net=args.net)

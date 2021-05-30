@@ -48,7 +48,7 @@ def send_packet(packet, iface):
     sendp(fragment(packet), iface=iface)
 
 
-def send_kdeconnect_identiy_request(iface="lo"):
+def send_kdeconnect_identity_request(iface="lo"):
     packet = create_udp_broadcast(
         payload=json.dumps(kdeconnect_identity_request),
         iface=iface,
